@@ -112,7 +112,7 @@ overflow me : Nah..
     ```c
     if(key == 0xcafebabe)
     ```
-    - also noting that it is the line right before is:
+    - also noting that the line right before is:
     ```c
     gets(overflowme);       // smash me!
     ```
