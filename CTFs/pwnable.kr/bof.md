@@ -53,7 +53,7 @@ overflow me : Nah..
     void func(const char* input){
         char buf[8];
         int n = 0x11111111;
-        strcpy(buf, input);
+        gets(buf);
     }
     ```
     - if we were to input 'AAAAAAAAAAAA', since buf can only hold 8 bytes, it would store the first 8. But what happens to last 4?
