@@ -6,7 +6,7 @@ Is that true?
 
 ssh bof@pwnable.kr -p2222 (pw: guest)
 
-- check contents
+- let's check the contents of the directory
 ```bash
 bof@ubuntu:~$ ls -ls
 total 24
@@ -53,14 +53,14 @@ overflow me : Nah..
     void func(const char* input){
         char buf[8];
         int n = 0x11111111;
-        strcpy(buf, input);
+        gets(buf);
     }
     ```
     - if we were to input 'AAAAAAAAAAAA', since buf can only hold 8 bytes, it would store the first 8. But what happens to last 4?
     - after running the program with the input we find that suddenly, n=0x41414141
-    - 0x41 in ascii == 'A', so that's what happens to the last 4 'A's
-    - i copied bof.c into my personal environment and created my own executable 'test' since bof runs over nc
-    - when I run gdb test I disassemble both main and func to see how it runs and look for possible breakpoints
+    - 0x41 is the hex number for the ascii character 'A', so that's what happens to the last 4 'A's
+    - i copied the bof executable into my local computer since bof runs over nc
+    - when I run 'gdb bof' I disassemble both main and func to see how it runs and look for possible breakpoints
     ```bash
         gef➤  disass main
         Dump of assembler code for function main:
@@ -112,7 +112,7 @@ overflow me : Nah..
     ```c
     if(key == 0xcafebabe)
     ```
-    - also noting that it is the line right after:
+    - also noting that the line right before is:
     ```c
     gets(overflowme);       // smash me!
     ```
