@@ -1,4 +1,4 @@
-# Cybersecurity Home Lab by Vince Moreno
+# Cybersecurity Home Lab
 
 This repository contains all projects and exercises I have done to learn more about cybersecurity
 
