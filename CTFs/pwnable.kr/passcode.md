@@ -426,4 +426,3 @@ passcode@ubuntu:~$
 - reasoning for jumping to an earlier address:
     - setregid() provides the required group privilege needed to run /bin/cat flag since permissions for that file are restricted
     - basically just need to to run setregid first
-    
